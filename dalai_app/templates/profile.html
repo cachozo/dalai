@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap2.css')}}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css')}}">
+    </head>
+    <body style="color:rgb(248, 248, 248) ;background-color: rgb(220, 53, 69);">
+        <header>
+                <header style="color: #270e7e;">
+                        <h1 style="color:#fff200 ;  text-align: center;" class="bienvenida1">"“Dale a tus seres queridos alas para volar, </h1>
+                    <h2 style="color:#fff200 ; text-align: center;">raíces para volver y razones para quedarse" Dalai Lama</h2>
+                </header>
+            <nav class="nav, d-flex align-self-center flex-row, shadow-sm p-3 mb-5 bg-body rounded" class="nav_background" >
+                <img class="dalai" id="dalai" src="{{ url_for('static',filename='images/Imagen5.png')}}" alt="user icon">
+                <h2 style="color: #da1c1c ;" class="nav-item px-3 flex-grow-1">
+                    Dalai
+                </h2>
+                <div class="text-black d-flex justify-content-end align-self-center flex-1 px-4" id="nav_background2">
+                    <ul style="margin: 0px;" class="list-unstyled px-2 d-flex flex-row">
+                        
+                        <li class="px-3">
+                            <a style="text-decoration:none; font-family: Arial, Helvetica, sans-serif;" class="text-danger" href="/home">
+                                Inicio
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <a style="text-decoration:none; font-family: Arial, Helvetica, sans-serif;" class="text-danger" href="/logout">
+                                Salir
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <a style= " text-decoration:none ; font-family: Arial, Helvetica, sans-serif;" class="text-danger" href="/{{inSessionData['first_name']}}/{{inSessionData['users_id']}}">
+                                Perfil
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <a style= " text-decoration:none ; font-family: Arial, Helvetica, sans-serif;" class="text-danger">
+                                Bienvenid@{{inSessionData['first_name']}}
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <img class="dalai2" src="{{ url_for('static',filename='images/Imagen8.png')}}" alt="user icon">
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main class="px-5">
+            {% for user in user_In_Table %}
+                <div class="my-3">
+                    <div style="background-color: #9216b5;" class=" text-warning d-flex flex-row justify-content-center align-self-center m-5">
+                        <h3>
+                            {{user['first_name']}} {{user['last_name']}}
+                        </h3>
+                    </div>
+                    <div style="background-color: #bc0789; text-align: center ; justify-content: center;" class="px-4 d-flex flex-row justify-content-start align-text-bottom">
+                        <h5 style="text-decoration: none;" class=" fw-bold">
+                            Su cuenta
+                        </h5>
+                    </div>
+                    <div style= "background-color: #bc0789; text-align: center ; justify-content: center;" class="px-4 d-flex flex-row justify-content-start align-text-center">
+                        <h6 class="fw-bold align-items-center">
+                            Chhailas: 
+                        </h6>
+                        <h6 style="background-color: #bc0789; text-align: center ; justify-content: center;" class="px-2 align-items-center">
+                            @{{user['first_name']}}{{user['last_name']}}
+                        </h6>
+                    </div>
+                    <div style="background-color: #bc0789; text-align: center ; justify-content: center;" class="px-4 d-flex flex-row">
+                        <h6 style="text-align: center ; justify-content: center;" class="fw-bold">
+                            Email: 
+                        </h6>
+                        <p class="px-2 align-items-center">
+                            {{user['email']}}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="my-4">
+                <div class="px-4 d-flex flex-row justify-content-start align-text-bottom">
+                    <h5 class="text-decoration-underline fw-bold">
+                        Todos tus Dalais
+                    </h5>
+                </div>
+                <div>
+                    {% if fromPostDBById[0]['posts_content'] %}
+                        <table class="table table-success table-sm">
+                            <thead style="align-items: center; justify-content: center; text-align: center;">
+                                <td class="col-auto px-5">
+                                    Dalai
+                                </td>
+                                <td class="col-auto px-5">
+                                    Likes
+                                </td>
+                                {% if fromPostDBById[0]['user_id'] == session['users_id'] %}
+                                    <td class="col-auto px-5">
+                                        
+                                    </td>
+                                {% endif %}
+                            </thead>
+                            <tbody class="">
+                                {% for i in fromPostDBById: %}
+                                <tr class="col-auto px-5">
+                                    <td class="fs-6">
+                                        {{i['posts_content']}}
+                                    </td>
+                                    <td class="fs-6">
+                                        {{i['post_likes']}}
+                                    </td>
+                                    <td class="fs-6">
+                                        {% if i['user_id'] == session['users_id'] %}
+                                            <a href="/home/delete/{{i['posts_id']}}" class="my-1 btn btn-danger" type="submit" name="buttonSubmitForm" id="buttonSubmitForm">Borrar dalai</a>
+                                            <a href="/post/edit/{{i['posts_id']}}" class="btn btn-success" type="submit" value="Edit" name="buttonSubmitForm" id="buttonSubmitForm">Editar dalai</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div>
+                            <p class="px-4">
+                                Te leemos, ve a Inicio y crea tu primer dalai
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div style="color: #ffffff;" class="d-flex flex-row justify-content-end ">
+                <a style="color: #ffffff;" class="m-4 btn btn-info justify-content-end" onclick="alertFunction()" href="/delete/account/{{session['users_id']}}">
+                    Darte de baja
+                </a>
+            </div>
+        </main>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+    </body>
+</html>

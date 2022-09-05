@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap');
+* {
+	vertical-align: baseline;
+	font-weight: inherit;
+	font-family: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	border: 0 none;
+	outline: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.login_icon{
+	height: auto;
+	width: auto;
+	margin-right: 10%;
+}
+
+.m-2fw-bold{
+
+	margin: 0px 0px 0px 0px;
+}
+.likelink{
+	width: 5%;
+	height: 100%;
+	background-color: blue;
+	box-shadow: 0 5px 0 darkblue;
+	color: white;
+	font-weight: bold;
+}
+
+.likes_count{
+	width: 100%;
+}
+
+@media only screen and (min-width: 360px) and (max-width: 600px){
+	@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap');
+		html,body {
+		height: 100%; margin: 0px; padding: 0px; }
+	
+	#navbar {
+		margin-bottom:0; }
+
+	.alert {
+		border-radius: 0; }
+
+	.row {
+		margin-right: 0;
+		margin-left: 0; }
+
+.dalai {
+
+	height: 0px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+	.footer {
+		margin-top: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+		border-top: none; }
+	
+	.panel {
+		border:none; }
+
+	* {
+		vertical-align: baseline;
+		font-weight: inherit;
+		font-family: inherit;
+		font-style: inherit;
+		font-size: 100%;
+		border: 0 none;
+		outline: 0;
+		padding: 0;
+		margin: 0;
+		font-family: 'Titillium Web', sans-serif;
+	}
+
+	#mainHome{
+		display: flex;
+		flex-direction: column;
+	}
+
+	* {
+		vertical-align: baseline;
+		font-weight: inherit;
+		font-family: inherit;
+		font-style: inherit;
+		font-size: 100%;
+		border: 0 none;
+		outline: 0;
+		padding: 0;
+		margin: 0;
+		font-family: 'Titillium Web', sans-serif;
+	}
+
+	#table_text{
+		font-size: 8px;
+	}
+
+	#table_text2{
+		font-size: 8px;
+	}
+
+	#nav_background2{
+		font-size: 12px;
+		margin: 2px 1px;
+		background-color: ;
+	}
+}
+

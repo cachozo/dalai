@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap2.css')}}">
+        <title>Registro</title>
+    </head>
+    <body style="color:rgb(220, 53, 69) ;background-color: rgb(220, 53, 69);">
+        <header style="color: #270e7e;">
+                <h1 style="color:#fff200 ;  text-align: center;" class="bienvenida1">Bienvenid@ a Dalái</h1>
+            <h2 style="color:#fff200 ; text-align: center;">Crea una cuenta para comenzar</h2>
+        </header>
+        <main class="p-5 bg-danger">
+            <div style="background-color: #aaa660;" class="d-flex flex-row bd-highlight justify-content-center align-items-center rounded shadow p-3 mb-5 bg-body rounded" class="container_form_image">
+                <div class="d-flex flex-column justify-content-center align-items-center" class="container_form">
+                    <form class="p-2 m-5 justify-content-center align-items-center" class="form_login" action="/register/newuser" method="POST">
+                        <div class="container_inputs">
+                            <div class="py-4">
+                                <h2>
+                                    Bienvenid@/ Námaste
+                                </h2>
+                            </div>
+                            <div>
+                                {% with messages = get_flashed_messages() %}
+                                    {% if messages: %}
+                                        {% for message in messages: %}
+                                        <p>
+                                            {{message}}
+                                        </p>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="d-flex flex-row justify-content-center align-items-center e-5 py-3">
+                            <img class="login_icon" src="./../static/images/user(1).png" alt="user icon">
+                                <input class="form-control-plaintext" type="text" id="first_name" name="first_name" placeholder="Nombre"/>
+                            </div>
+                            <div class="d-flex flex-row justify-content-center align-items-center e-5 py-3">
+                            <img class="login_icon" src="./../static/images/user(1).png" alt="user icon">
+                                <input class="form-control-plaintext" type="text" id="last_name" name="last_name" placeholder="Apellido"/>
+                            </div>
+                            <div class="d-flex flex-row justify-content-center align-items-center e-5 py-3">
+                                <img class="login_icon" src="./../static/images/correo.png" alt="email_icon">
+                                <input class="form-control-plaintext" type="email" id="email" name="email" placeholder="Correo"/>
+                            </div>
+                            <div class="d-flex flex-row justify-content-center align-items-center e-5 py-3">
+                                <img class="login_icon" src="./../static/images/lock-icon.png" alt="password_icon">
+                                <input class="form-control-plaintext"  type="password" name="users_password" id="users_password" placeholder="Contraseña"/>
+                            </div>
+                            <div class="d-flex flex-row justify-content-center align-items-center e-5 py-3">
+                                <img class="login_icon" src="./../static/images/png-transparent-key-gold-key-material-metal-skeleton-key (1) (1).png" alt="password_icon">
+                                <input class="form-control-plaintext"  type="password" name="confirm_users_password" id="confirm_users_password" placeholder="Repite la contraseña"/>
+                            </div>
+                            <div class="d-flex flex-row justify-content-start align-items-center e-5 py-3">
+                                <input class="mx-1" id="signin_preference" name="signin_preference" type="checkbox">
+                                <label for="signin_preference">Estoy de acuerdo con la política de datos</label>
+                            </div>
+                            <div class="mb-3 row">
+                                <input class="btn btn-success" type="submit" value="Eres de los nuestros" name="buttonSubmitForm" id="buttonSubmitForm">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center w-10" class="container_login_image">
+                    <img class="img-fluid w-50 mh-100" class="login_image" src="./../static/images/e85efd8c4a6cb40439e2a18adf39257d-ilustracion-de-hombre-sij-de-india.png" alt="mujerhindu”">
+                    <a class="text-danger" href="/login">Inicia sesión</a>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

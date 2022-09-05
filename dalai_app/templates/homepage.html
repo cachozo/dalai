@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap2.css')}}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/home.css')}}">
+        <title>Inicio</title>
+    </head>
+    <body style="color:rgb(248, 248, 248) ;background-color: rgb(220, 53, 69);">
+        <header>
+                <header style="color: #270e7e;">
+                        <h1 style="color:#fff200 ;  text-align: center;" class="bienvenida1">"Un corazón abierto</h1>
+                    <h2 style="color:#fff200 ; text-align: center;">es una mente abierta" Dalai Lama</h2>
+                </header>
+            <nav class="nav, d-flex align-self-center flex-row, shadow-sm p-3 mb-5 bg-body rounded" class="nav_background" >
+                <img class="dalai" id="dalai" src="./../static/images/Imagen5.png" alt="user icon">
+                <h2 style="color: #da1c1c ;" class="nav-item px-3 flex-grow-1">
+                    Dalai
+                </h2>
+                <div class="text-black d-flex justify-content-end align-self-center flex-1 px-4" id="nav_background2">
+                    <ul style="margin: 0px;" class="list-unstyled px-2 d-flex flex-row">
+                        
+                        <li class="px-3">
+                            <a style="text-decoration:none; font-family: Arial, Helvetica, sans-serif;" class="text-danger" href="/home">
+                                Inicio
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <a style="text-decoration:none; font-family: Arial, Helvetica, sans-serif;" class="text-danger" href="/logout">
+                                Salir
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <a style= " text-decoration:none ; font-family: Arial, Helvetica, sans-serif;" class="text-danger" href="/{{inSessionData['first_name']}}/{{inSessionData['users_id']}}">
+                                Perfil
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <a style= " text-decoration:none ; font-family: Arial, Helvetica, sans-serif;" class="text-danger">
+                                Bienvenid@{{inSessionData['first_name']}}
+                            </a>
+                        </li>
+                        <li class="px-3">
+                            <img class="dalai2" src="./../static/images/Imagen8.png" alt="mujerhindu”">
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main class="homeMain d-flex flex-row bg-secondary py-4" id="mainHome">
+            <div class="d-flex flex-column px-3 flex-grow-1">
+                <div>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages: %}
+                            {% for message in messages: %}
+                            <p>
+                                {{message}}
+                            </p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <form class="justify-content-center align-items-center" class="form_login" action="/home/post" method="POST">
+                    <nav class="nav, d-flex flex-row, shadow-sm p-3 mb-5 bg-body rounded" class="nav_background">
+                        <input class="form-control-plaintext" type="text" id="idea" name="posts_content" placeholder="Escribe tu pensamiento a compartir"/>
+                        <input class="btn btn-success" type="submit" value="Enviar" name="buttonSubmitForm" id="buttonSubmitForm">
+                        <input type="hidden" name="users_id" value="{{session['users_id']}}"/>
+                    </nav>
+                </form>
+                {% if allPostus != False %}
+                    {% for post in allPostus %}
+                        <div style="border: #fff200 ;" class=" p-1 d-flex flex-row justify-content-between align-self-stretch text-white bg-secondary shadow-sm border border-secondary">
+                            <div>
+                                <h6 class="m-2 fw-bold">
+                                    {{post['first_name']}}
+                                </h6>
+                                <img src="{{ url_for('static',filename='images/ganesh.png')}}" alt="ganesha">
+                            </div>
+                            <div class="d-flex flex-column m-2 flex-grow-1">
+                                <div class="form-floating">
+                                    <p class="fs-6">
+                                        @{{post['first_name']}}{{post['last_name']}}  {{post['created_at']}}
+                                    </p>
+                                    <div class="border border-secondary m-2">
+                                        <p class="form-control-plaintext w-100 text-white p-1 rounded m-2 align-text-center" type="text" name="posts_content" placeholder="Post" value="{{post['posts_content']}}" disabled readonly>
+                                        {{post['posts_content']}}
+                                    </p>
+                                    </div>
+                                </div>
+                                <form class="d-flex flex-row mx-3" action="/home/post/like" method="POST">
+                                    <div class="likes_count">
+                                        <button style="background-color: #ad06b3; border-radius: 20px; width: 80px;" type="submit" value="1" class = "likelink" name="likes_counts" onclick="increaselikes()"> Me gusta</button>
+                                        <a class="text-white mx-1 text-decoration-none fw-bold"><span class="numberLikes">{{post['post_likes']}}</span> Likes</a>
+                                        <a style="color: #f3c40b;" class="text-warning mx-1 text-decoration-none fw-bold" href="/post/likes/{{post['posts_id']}}"> Mira a quiénes</a>
+                                        <input type="hidden" name="users_id" value="{{session['users_id']}}"/>
+                                        <input type="hidden" name="posts_id" value="{{post['posts_id']}}"/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="d-flex flex-row mx-3 justify-content-center align-items-center">
+                                {% if post['user_id'] == session['users_id'] %}
+                                <a href="/post/edit/{{post['posts_id']}}" class="btn btn-light" type="submit" value="Edit" name="buttonSubmitForm" id="buttonSubmitForm">Editar</a>
+                                <a href="/home/delete/{{post['posts_id']}}" class=" m-2 btn btn-warning" type="submit" name="buttonSubmitForm" id="buttonSubmitForm">Borrar</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="d-flex flex-column px-3 flex-grow-1">
+                <table class="table table-warning table-sm" id="table_text">
+                    <thead style="align-items: center; justify-content: center; text-align: center;">
+                        <td style="color: #c61f10 ;" class="col-auto px-5">
+                        Chhailas 
+                        </td>
+                        <td style="color: #c61f10 ; vertical-align: auto; text-align: center; margin: auto;" class="col-auto px-5">
+                        Perfil
+                        </td>
+                    </thead>
+                    <tbody>
+                        {% for i in table_users: %}
+                        <tr id="table_text2">
+                            <td class="align-text-center" style="align-items: center; color: #c128eb; justify-content: center; text-align: center;">
+                                {{i['first_name']}} {{i['last_name']}}
+                            </td>
+                            <td class="text-secondary" style="align-items: center; justify-content: center; text-align: center;">
+                                <a style="text-decoration: none ; color: #a217c9; font-weight: bold;" class="" href="/{{i['first_name']}}/{{i['users_id']}}">  Ver Perfil</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
+</html>
